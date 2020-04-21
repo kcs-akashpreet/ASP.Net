@@ -17,26 +17,10 @@ steps:
     projects: '**/*.csproj'
     feedsToUse: 'select'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build the project'
-  inputs:
-    command: 'build'
-    configuration: $(configuration)
-    projects: '**/*.csproj'
-    arguments: '--no-restore --configuration $(buildConfiguration)'
 
-​- task: DotNetCoreCLI@2
-  displayName: 'Pack the package'
+- task: MSBuild@1
   inputs:
-    command: 'pack'
-    configuration: $(configuration)
-    packagesToPack: $(projectPath)
-    nobuild: true
-    versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '1'
-    minorVersion: '0'
-    patchVersion: '0'
-
+    solution: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the package'
