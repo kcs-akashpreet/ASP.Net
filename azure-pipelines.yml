@@ -7,36 +7,25 @@ trigger:
 - master
 
 pool:
-  name: Hosted Windows 2019 with VS2019
-  demands:
-  - msbuild
-  - visualstudio
-  - vstest
+  vmImage: 'VS2017-Win2016'
 
 
 variables:
-  BuildPlatform: 'Any CPU'
-  BuildConfiguration: 'Release'
+  solution: '**/*.csproj'
+  buildPlatform: 'AnyCPU'
 
 steps:
-
 - task: NuGetToolInstaller@1
-  displayName: 'Use NuGet 4.7.1'
-  inputs:
-    versionSpec: 4.7.1
-
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
-  inputs:
-    command: restore
-    projects: '**/Test.sln'
-    feedsToUse: config
-    nugetConfigPath: Nuget.config
 
 - task: NuGetCommand@2
-  displayName: 'NuGet restore'
   inputs:
-    restoreSolution: '**/Test.sln'
-- task: MSBuild@1
+    restoreSolution: '$(solution)'
+    packagesdirectory: '..\packages'
+
+- task: VSBuild@1
   inputs:
-    solution: '**/*.csproj'
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
