@@ -19,12 +19,17 @@ steps:
 
 
 - task: MSBuild@1
+  displayName: 'Build solution **/*.csproj'
   inputs:
     solution: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish the package'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+
