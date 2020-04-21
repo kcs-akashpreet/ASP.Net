@@ -22,7 +22,21 @@ steps:
   inputs:
     command: 'build'
     configuration: $(configuration)
-    projects: $(projectPath)
+    projects: '**/*.csproj'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+
+​- task: DotNetCoreCLI@2
+  displayName: 'Pack the package'
+  inputs:
+    command: 'pack'
+    configuration: $(configuration)
+    packagesToPack: $(projectPath)
+    nobuild: true
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '1'
+    minorVersion: '0'
+    patchVersion: '0'
+
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the package'
