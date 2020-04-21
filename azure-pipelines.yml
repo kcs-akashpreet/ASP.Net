@@ -16,15 +16,14 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
+
 - task: DotNetCoreCLI@2
-  displayName: "Dotnet Build"
+  displayName: 'Build the project'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--no-restore --configuration $(buildConfiguration)'
+    configuration: $(configuration)
+    projects: $(projectPath)
 
-
-   
 - task: DotNetCoreCLI@2
   displayName: 'Publish the package'
   inputs:
