@@ -25,7 +25,7 @@ steps:
 
 
    
-- task: CopyPublishBuildArtifacts@1
+- task: DotNetCoreCLI@2
   inputs:
     CopyRoot: '$(buildConfiguration)'
     Contents: '**/*.zip'
