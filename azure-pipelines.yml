@@ -23,3 +23,10 @@ steps:
     projects: '**/*.csproj'
     arguments: '--no-restore --configuration $(buildConfiguration)'
 
+
+   
+- task: CopyPublishBuildArtifacts@1
+  inputs:
+    CopyRoot: '$(buildConfiguration)'
+    Contents: '**/*.zip'
+    ArtifactName: 'drop'
