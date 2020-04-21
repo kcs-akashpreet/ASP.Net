@@ -7,20 +7,36 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Hosted Windows 2019 with VS2019
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
 
 variables:
-  buildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
+  BuildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+
+- task: NuGetToolInstaller@1
+  displayName: 'Use NuGet 4.7.1'
+  inputs:
+    versionSpec: 4.7.1
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
   inputs:
-    command: 'build'
-- task: PublishBuildArtifacts@1
+    command: restore
+    projects: '**/Test.sln'
+    feedsToUse: config
+    nugetConfigPath: Nuget.config
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    restoreSolution: '**/Test.sln'
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.csproj'
