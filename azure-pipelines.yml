@@ -22,6 +22,10 @@ steps:
   displayName: 'Build solution **/*.csproj'
   inputs:
     solution: '**/*.csproj'
+    
+    
+- script: dotnet build --configuration $(buildConfiguration) 
+  displayName: 'dotnet build $(buildConfiguration)' 
 
 
 - task: CopyFiles@2
