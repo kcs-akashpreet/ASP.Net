@@ -7,16 +7,12 @@ trigger:
 - master
 pool:
   vmImage: 'vs2017-win2016'
-variables:
-  buildConfiguration: 'Release'
-steps:
-- task: DotNetCoreCLI@2
-  displayName: "Dotnet Restore"
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
-    feedsToUse: 'select'
 
+steps:
+- task: DotNetCoreInstaller@0
+  displayName: 'Installing .NET Core SDK...'
+  inputs:
+    version: 3.0.100-preview6-012264
 
 - script: dotnet build --configuration $(buildConfiguration) BuildAndDeploy/BuildAndDeploy.csproj
   displayName: 'Building $(buildConfiguration)'
