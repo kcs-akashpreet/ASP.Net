@@ -6,7 +6,7 @@
 trigger:
 - master
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: 'vs2017-win2016'
 variables:
   buildConfiguration: 'Release'
 steps:
@@ -18,18 +18,19 @@ steps:
     feedsToUse: 'select'
 
 
-- task: MSBuild@1
-  displayName: 'Build solution **/*.csproj'
+- script: dotnet build --configuration $(buildConfiguration) BuildAndDeploy/BuildAndDeploy.csproj
+  displayName: 'Building $(buildConfiguration)'
+
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publishing App...'
   inputs:
-    solution: '**/*.csproj'
-
-
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs:
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
+    command: publish
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
+  displayName: 'Publishing Build Artifacts...'
+
 
