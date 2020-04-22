@@ -14,7 +14,7 @@ steps:
   inputs:
     version: 3.0.100-preview6-012264
 
-- script: dotnet build --configuration $(buildConfiguration) BuildAndDeploy/BuildAndDeploy.csproj
+- script: dotnet build --configuration $(buildConfiguration) dotnet-core-hello-world.csproj
   displayName: 'Building $(buildConfiguration)'
 
 
