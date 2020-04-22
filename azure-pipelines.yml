@@ -32,5 +32,3 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publishing Build Artifacts...'
-
-
