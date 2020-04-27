@@ -44,3 +44,11 @@ stages:
         arguments: '-f deployment.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'k8s'
+        command: 'run'
+        arguments: 'rollout restart deployment/dotnet-deployment'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
