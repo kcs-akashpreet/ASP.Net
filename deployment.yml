@@ -25,10 +25,13 @@ spec:
   template:
     metadata:
       labels:
-        app: dotnet-deployment 
+        app: dotnet-deployment
     spec:
       containers:
-      - name: dotnet
-        image: tsttst.azurecr.io/dotnet
-        ports:
-        - containerPort: 80
+        - name: dotnet
+          image: tsttst.azurecr.io/kcsakashpreethttpd:dotnet
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 80
+      imagePullSecrets:
+        - name: acr-secret
