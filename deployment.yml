@@ -31,8 +31,6 @@ spec:
         - name: dotnet
           image: tsttst.azurecr.io/kcsakashpreethttpd:dotnet
           imagePullPolicy: Always
-          imagePullSecrets:
-            - name: acr-secret
           name: dotnet-deployment
           ports:
           - containerPort: 80
