@@ -45,3 +45,6 @@ stages:
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
         
+    - task: CmdLine@2
+      inputs:
+        script: 'kubectl rollout restart deployment/dotnet-deployment'
