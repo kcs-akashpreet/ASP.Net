@@ -1,34 +1,46 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
 - master
-pool:
-  vmImage: 'vs2017-win2016'
 
+resources:
+- repo: self
 
 variables:
-  buildConfiguration: 'Release'
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '244655bd-120e-42e5-8317-d70f358c46ab'
+  imageRepository: 'kcsakashpreethttpd'
+  containerRegistry: 'tsttst.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
 
-steps:
-- task: DotNetCoreInstaller@0
-  displayName: 'Installing .NET Core SDK...'
-  inputs:
-    version: 3.0.100-preview6-012264
-
-- script: dotnet build --configuration $(buildConfiguration) dotnet-core-hello-world.csproj
-  displayName: 'Building $(buildConfiguration)'
-
-
-- task: DotNetCoreCLI@2
-  displayName: 'Publishing App...'
-  inputs:
-    command: publish
-    publishWebProjects: true
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: false
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publishing Build Artifacts...'
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: httpd
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'k8s'
+        command: 'apply'
+        arguments: '-f deployment.yml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
