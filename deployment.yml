@@ -30,7 +30,8 @@ spec:
       containers:
         - name: dotnet
           image: tsttst.azurecr.io/kcsakashpreethttpd:dotnet
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
+          name: dotnet-deployment
           ports:
           - containerPort: 80
       imagePullSecrets:
