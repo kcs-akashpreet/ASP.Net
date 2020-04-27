@@ -44,11 +44,14 @@ stages:
         arguments: '-f deployment.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
-    - task: Kubernetes@1
-      inputs:
-        connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'k8s'
-        command: 'run'
-        arguments: 'rollout restart deployment/dotnet-deployment'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Azure Container Registry'
+
+        - task: Kubernetes@1
+          inputs:
+            connectionType: 'Kubernetes Service Connection'
+            kubernetesServiceEndpoint: 'k8s'
+            command: 'run'
+            arguments: 'rollout restart deployment/dotnet-deployment'
+            secretType: 'dockerRegistry'
+            containerRegistryType: 'Azure Container Registry'
+            azureSubscriptionEndpointForSecrets: 'Microsoft Azure Sponsorship(18e05668-9230-41d2-8b66-a5622f5b9a8d)'
+            azureContainerRegistry: 'tsttst.azurecr.io'
