@@ -36,8 +36,6 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: dotnet
-
-
     - task: replacetokens@3
       inputs:
         targetFiles: 'deployment.yml'
@@ -49,7 +47,6 @@ stages:
         tokenSuffix: '}#'
         useLegacyPattern: false
         enableTelemetry: true
-
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
