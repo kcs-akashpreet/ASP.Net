@@ -36,6 +36,20 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: dotnet
+
+
+    - task: replacetokens@3
+      inputs:
+        targetFiles: 'deployment.yml'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+        useLegacyPattern: false
+        enableTelemetry: true
+
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
@@ -44,7 +58,4 @@ stages:
         arguments: '-f deployment.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
-        
-    - task: CmdLine@2
-      inputs:
-        script: 'kubectl rollout restart deployment/dotnet-deployment'
+
