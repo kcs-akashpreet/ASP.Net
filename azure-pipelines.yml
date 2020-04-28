@@ -14,7 +14,8 @@ variables:
   imageRepository: 'kcsakashpreethttpd'
   containerRegistry: 'tsttst.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: $
+  tags: |
+    $(tag) 
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
