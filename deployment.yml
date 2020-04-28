@@ -13,7 +13,6 @@ spec:
   selector:
     app: dotnet-deployment
   type: LoadBalancer     
-  
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
