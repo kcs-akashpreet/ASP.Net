@@ -40,7 +40,7 @@ stages:
     - task: replacetokens@3
       inputs:
         rootDirectory: '/'
-        targetFiles: 'deployment.yml'
+        targetFiles: '**/deployment.yml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
