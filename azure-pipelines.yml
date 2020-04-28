@@ -57,6 +57,17 @@ stages:
         arguments: 'image deployment/dotnet-deployment dotnet-deployment=tsttst.azurecr.io/kcsakashpreethttpd:dotnet --record'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'k8s'
+        command: 'apply'
+        arguments: '-f service.yml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
+
+
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
