@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: dotnet
-          image: tsttst.azurecr.io/kcsakashpreethttpd:#{dotnet}#
+          image: tsttst.azurecr.io/kcsakashpreethttpd:#{Bild.BuildId}#
           imagePullPolicy: Always
           name: dotnet-deployment
           ports:
