@@ -14,7 +14,7 @@ variables:
   imageRepository: 'kcsakashpreethttpd'
   containerRegistry: 'tsttst.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: $
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -35,7 +35,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        tags: dotnet
+        tags: $
     - task: replacetokens@3
       inputs:
         rootDirectory: '/'
@@ -56,3 +56,5 @@ stages:
         arguments: '-f deployment.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+
+
