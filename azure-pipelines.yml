@@ -14,7 +14,7 @@ variables:
   imageRepository: 'kcsakashpreethttpd'
   containerRegistry: 'tsttst.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: dotnet
+  tag: 'dotnet'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -48,6 +48,15 @@ stages:
         tokenSuffix: '}#'
         useLegacyPattern: false
         enableTelemetry: true
+
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'k8s'
+        command: 'set'
+        arguments: 'image deployment/dotnet-deployment dotnet=tsttst.azurecr.io/kcsakashpreethttpd:dotnet --record'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
@@ -56,5 +65,6 @@ stages:
         arguments: '-f deployment.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+
 
 
