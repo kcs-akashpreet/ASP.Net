@@ -38,6 +38,7 @@ stages:
         tags: dotnet
     - task: replacetokens@3
       inputs:
+        rootDirectory: '/'
         targetFiles: 'deployment.yml'
         encoding: 'auto'
         writeBOM: true
@@ -55,4 +56,3 @@ stages:
         arguments: '-f deployment.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
-
