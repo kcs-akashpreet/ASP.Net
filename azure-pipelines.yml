@@ -39,8 +39,8 @@ stages:
           $(tag)
     - task: replacetokens@3
       inputs:
-        rootDirectory: '/'
-        targetFiles: '**/deployment.yml'
+        rootDirectory: '/usr/bin'
+        targetFiles: 'deployment.yml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
