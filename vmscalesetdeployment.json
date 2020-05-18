@@ -1,0 +1,44 @@
+az account show --query id
+az account show --query tenantId
+
+VM.json
+
+{
+	"builders": [{
+		"type": "azure-arm",
+
+		"client_id": "21bb67cf-16db-4f8f-a738-5c8de0726b81",
+		#"client_secret": "0e760437-bf34-4aad-9f8d-870be799c55d",
+		"tenant_id": "21bb67cf-16db-4f8f-a738-5c8de0726b81",
+		"subscription_id": "18e05668-9230-41d2-8b66-a5622f5b9a8d",
+
+		"managed_image_resource_group_name": "aks",
+		"managed_image_name": "myPackerImageDotNet",
+
+		"os_type": "Linux",
+		"image_publisher": "Akash",
+		"image_offer": "UbuntuServer",
+		"image_sku": "16.04-LTS",
+
+		"azure_tags": {
+			"dept": "Support",
+			"task": "Image deployment"
+		},
+
+		"location": "Central US",
+		"vm_size": "Standard_DS2_v2"
+	}],
+	"provisioners": [{
+		"execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+		"inline": [
+			"apt-get update",
+			"apt-get upgrade -y",
+			"apt-get -y install nginx",
+			"Copy-Item '$(build.artifactstagingdirectory)' '/usr/nginx/html/'"
+
+			"/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+		],
+		"inline_shebang": "/bin/sh -x",
+		"type": "shell"
+	}]
+}
