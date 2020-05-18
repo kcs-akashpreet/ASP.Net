@@ -1,8 +1,5 @@
-az account show --query id
-az account show --query tenantId
-
-VM.json
-
+#az account show --query id
+#az account show --query tenantId
 {
 	"builders": [{
 		"type": "azure-arm",
