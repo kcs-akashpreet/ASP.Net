@@ -1,13 +1,8 @@
-az account show --query id
-az account show --query tenantId
-
-VM.json
-
 {
 	"builders": [{
 		"type": "azure-arm",
 
-		"client_id": "21bb67cf-16db-4f8f-a738-5c8de0726b81",
+		"client_id": "bffaec7d-ff4e-48cd-ac6e-e76ed92920df",
 		"client_secret": "77e239f5-4d3d-41ab-ae8c-ac3df3d555ec",
 		"tenant_id": "21bb67cf-16db-4f8f-a738-5c8de0726b81",
 		"subscription_id": "18e05668-9230-41d2-8b66-a5622f5b9a8d",
@@ -34,7 +29,8 @@ VM.json
 			"apt-get update",
 			"apt-get upgrade -y",
 			"apt-get -y install nginx",
-			"Copy-Item '$(build.artifactstagingdirectory)' '/usr/nginx/html/'"
+			"systemctl enable nginx",
+            "systemctl start nginx"
 
 			"/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
 		],
