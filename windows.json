@@ -26,8 +26,8 @@
         "task": "Image deployment"
     },
 
-    "location": "East US",
-    "vm_size": "Standard_D2_v2"
+    "location": "Central US",
+    "vm_size": "Standard_A1_v2"
   }],
   "provisioners": [{
     "type": "powershell",
