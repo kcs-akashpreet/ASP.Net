@@ -57,7 +57,7 @@ stages:
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'k8scluster'
-        command: 'delete'
+        command: 'apply'
         arguments: '-f service.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
