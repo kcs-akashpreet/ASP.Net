@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: dotnet
-          image: tsttst.azurecr.io/kcsakashpreethttpd:#{tag}#
+          image: k8sdemoregistory.azurecr.io/k8sdemoregistory:#{tag}#
           imagePullPolicy: Always
           name: dotnet-deployment
           ports:
