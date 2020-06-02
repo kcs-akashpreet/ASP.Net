@@ -14,7 +14,7 @@ variables:
   imageRepository: 'kcsakashpreetaspnet'
   containerRegistry: 'k8sdemoregistory.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: 'Asp.Net'
+  tag: 'AspDotNet'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
