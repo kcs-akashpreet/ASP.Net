@@ -5,6 +5,9 @@ metadata:
   labels:
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: dotnet-deployment  
   template:
     metadata:
       labels:
@@ -28,10 +31,6 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-  #selector:
-    #run: httpd-deployment
-  selector:
-    app: dotnet-deployment
   selector:
     app: dotnet-deployment
   type: LoadBalancer
